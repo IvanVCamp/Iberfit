@@ -1,0 +1,128 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5; /* Color de fondo para todo el sitio */
+}
+
+.container {
+  width: 360px;
+  margin: 20px auto;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 20px;
+  position: relative;
+  overflow-y: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.logo {
+  display: block;
+  height: 80px;
+}
+
+.dark-mode-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+nav {
+  margin: 20px 0;
+  text-align: center;
+}
+
+nav a {
+  color: #00a86b;
+  text-decoration: none;
+}
+
+.recipe-info {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.info-box {
+  background-color: #00a86b; /* Verde característico */
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex: 1;
+  min-width: 100px; /* Asegura que todos los cuadros tengan al menos el mismo ancho mínimo */
+}
+
+.info-icon {
+  width: 20px; /* Tamaño del icono */
+  height: auto;
+  margin-bottom: 5px;
+}
+
+.recipe-description {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.scrollable-ingredients {
+  max-height: 150px;
+  overflow-y: auto;
+  background-color: #98FB98; /* Verde hierba claro */
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  list-style-type: none; /* Elimina los bullets de la lista */
+}
+
+.recipe-instructions {
+  background-color: #90EE90; /* Verde un poco más oscuro */
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.exit-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Ajustes responsivos si es necesario */
+@media (max-width: 400px) {
+  .container,
+  .navigation-buttons {
+    width: auto;
+    margin: 10px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 728px;
+  }
+}

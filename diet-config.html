@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configuración de Dieta - Verfit</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+  <header class="page-header">
+    <img src="logo.png" alt="Verfit Logo" class="logo">
+    <button id="dark-mode-toggle" class="dark-mode-button">Modo Oscuro</button>
+  </header>
+  
+  <nav>
+    <a href="index.html">INICIO</a> > <a href="nutrition-config.html">DETALLES</a>
+  </nav>
+  
+  <main>
+    <section class="details-form">
+      <div class="avatar-section">
+        <img src="avatar.png" alt="Avatar" class="avatar" id="user-avatar">
+      </div>
+      <div class="food-section">
+        <img src="food-pyramid.png" alt="Pirámide Alimenticia" class="food-pyramid">
+        <div id="veggies-section" class="pyramid-section"></div>
+        <div id="proteins-section" class="pyramid-section"></div>
+        <div id="dairy-section" class="pyramid-section"></div>
+        <div id="carbs-section" class="pyramid-section"></div>
+        <div id="fruits-veggies-message" class="tooltip">FRUTA Y VERDURAS</div>
+        <div id="proteins-message" class="tooltip">PROTEÍNAS</div>
+        <div id="dairy-message" class="tooltip">LÁCTEOS</div>
+        <div id="carbs-sweets-message" class="tooltip">CARBOHIDRATOS y DULCES</div>
+      </div>
+
+      <div class="question">
+        <em class="question-text">¿Con qué frecuencia consumes cada una de las siguientes categorías de alimentos?</em>
+      </div>
+
+      <div class="slider-container">
+        <label for="sweets-slider" class="food-group">GRUPO A - DULCES</label>
+        <input type="range" id="sweets-slider" name="sweets" min="0" max="100" value="20" oninput="updateSliderValue(this)">
+        <span id="sweets-value">20%</span>
+      </div>
+      
+      <div class="slider-container">
+        <label for="proteins-slider" class="food-group">GRUPO B - PROTEÍNAS</label>
+        <input type="range" id="proteins-slider" name="proteins" min="0" max="100" value="20" oninput="updateSliderValue(this)">
+        <span id="proteins-value">20%</span>
+      </div>
+      
+
+
+      <div class="slider-container">
+        <label for="dairy-slider" class="food-group">GRUPO C - LÁCTEOS</label>
+        <input type="range" id="dairy-slider" name="dairy" min="0" max="100" value="20" oninput="updateSliderValue(this)">
+        <span id="dairy-value">20%</span>
+      </div>
+
+      <div class="slider-container">
+        <label for="vegetables-slider" class="food-group">GRUPO D - VERDURAS</label>
+        <input type="range" id="vegetables-slider" name="vegetables" min="0" max="100" value="20" oninput="updateSliderValue(this)">
+        <span id="vegetables-value">20%</span>
+      </div>
+
+      <div class="slider-container">
+        <label for="fruits-slider" class="food-group">GRUPO E - FRUTAS</label>
+        <input type="range" id="fruits-slider" name="fruits" min="0" max="100" value="10" oninput="updateSliderValue(this)">
+        <span id="fruits-value">10%</span>
+      </div>
+
+      <div class="slider-container">
+        <label for="carbs-slider" class="food-group">GRUPO F - CARBOHIDRATOS</label>
+        <input type="range" id="carbs-slider" name="carbs" min="0" max="100" value="10" oninput="updateSliderValue(this)">
+        <span id="carbs-value">10%</span>
+      </div>
+      
+      <div class="form-actions">
+        <button class="back-button" onclick="window.location.href='medidas.html'">←</button>
+        <button class="submit" onclick="location.href='main.html'">Finalizar</button>
+      </div>
+    </section>
+  </main>
+  
+</div>
+<script>
+    window.onload = function() {
+     var avatar = localStorage.getItem('userAvatar');
+     if (avatar) {
+         document.getElementById('user-avatar').src = avatar;
+     }
+   };
+   </script>
+
+<script>
+    function showTooltip(section) {
+      var tooltipId = section + "-message";
+      var tooltip = document.getElementById(tooltipId);
+      tooltip.style.display = "block";
+      tooltip.classList.add("show");
+  
+      setTimeout(function() {
+        tooltip.style.display = "none";
+        tooltip.classList.remove("show");
+      }, 3000);
+    }
+  
+    document.getElementById('veggies-section').addEventListener('mouseover', function() {
+      showTooltip('fruits-veggies');
+    });
+    document.getElementById('proteins-section').addEventListener('mouseover', function() {
+      showTooltip('proteins');
+    });
+    document.getElementById('dairy-section').addEventListener('mouseover', function() {
+      showTooltip('dairy');
+    });
+    document.getElementById('carbs-section').addEventListener('mouseover', function() {
+      showTooltip('carbs-sweets');
+    });
+  </script>
+</body>
+<script>
+ function updateSliderValue(slider) {
+  var allSliders = document.querySelectorAll('input[type="range"]');
+  var total = 0;
+  allSliders.forEach(function(s) {
+    total += parseInt(s.value);
+  });
+
+  var unusedPercentage = 100 - total;
+  
+  var remainingSliders = allSliders.length - 1;
+  var addToEachSlider = unusedPercentage / remainingSliders;
+
+  allSliders.forEach(function(s) {
+    if (s !== slider) {
+      var currentValue = parseInt(s.value);
+      var newValue = currentValue + addToEachSlider;
+      if (newValue < 0) {
+        newValue = 0;
+      } else if (newValue > 100) {
+        newValue = 100;
+      }
+      s.value = newValue.toFixed(0);
+      document.getElementById(s.name + '-value').textContent = s.value + '%';
+    }
+  });
+
+  document.getElementById(slider.name + '-value').textContent = slider.value + '%';
+}
+
+document.querySelectorAll('input[type="range"]').forEach(function(slider) {
+  slider.addEventListener('input', function() {
+    updateSliderValue(slider);
+  });
+});
+document.getElementById('dark-mode-toggle').onclick = function() {
+  document.body.classList.toggle('dark-mode');
+};
+document.getElementById('dark-mode-toggle').addEventListener('click', function() {
+  document.body.classList.toggle('dark-mode');
+  var elements = document.querySelectorAll('.container, .registration-form, .details-form, nav, button, .cancel, .submit, .back-button, .forward-button');
+  elements.forEach(function(element) {
+    element.classList.toggle('dark-mode');
+  });
+});
+</script>
+</html>

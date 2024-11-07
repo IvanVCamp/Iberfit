@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registro - Verfit</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+  <header>
+    <img src="logo.png" alt="Verfit Logo" class="logo">
+    <button class="menu-toggle">☰</button>
+  </header>
+  <nav>
+    <a href="#">INICIO</a> > <a href="#">REGISTRO</a>
+    <button id="dark-mode-toggle" class="dark-mode-button">Modo Oscuro</button>
+  </nav>
+  <main>
+    <section class="registration-form">
+      <form action="detalles.html" method="POST">
+        <div class="avatar-section">
+          <label for="avatar-upload">
+            <img src="default-avatar.png" alt="Avatar" class="avatar" id="avatar-image">
+            <button type="button" class="camera-button" onclick="document.getElementById('avatar-upload').click()">
+              <img src="camera-icon.png" alt="Upload" class="camera-icon">
+            </button>
+          </label>
+          <input id="avatar-upload" type="file" name="avatar" hidden onchange="saveUserImage(event)">
+        </div>
+        
+        
+        <div class="input-group">
+          <label for="username">Nombre de usuario</label>
+          <input id="username" type="text" name="username" required>
+        </div>
+        
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input id="password" type="password" name="password" required onkeyup="checkPasswordStrength()">
+          <div id="password-strength" class="badge badge-pill"></div>
+        </div>
+        
+        
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input id="email" type="email" name="email" required>
+        </div>
+        
+        <div class="input-group">
+          <label for="date">Date</label>
+          <input id="date" type="date" name="date" required>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="cancel">Cancel</button>
+          <button type="submit" class="submit" onclick="submitForm()">Submit</button>
+        </div>
+      </form>
+    </section>
+  </main>
+</div>
+</body>
+<script>
+  function checkPasswordStrength() {
+    var strengthBadge = document.getElementById('password-strength');
+    var password = document.getElementById('password').value;
+    var strength = 0;
+  
+    if (password) {
+      if (password.length >= 6 && password.length <= 8) strength = 3;
+      else if (password.length < 6) strength = 2;
+      else if (password.length >= 8) strength = 5;
+  
+      if (strength < 5) {
+        if (password.match(/^[0-9]+$/) || password.match(/^[A-Za-z]+$/)) strength = 1;
+      }
+    }
+  
+    switch(strength) {
+      case 0:
+        strengthBadge.innerHTML = '0 de 5';
+        strengthBadge.className = 'badge badge-pill badge-danger';
+        break;
+      case 1:
+        strengthBadge.innerHTML = '1 de 5';
+        strengthBadge.className = 'badge badge-pill badge-danger';
+        break;
+      case 2:
+        strengthBadge.innerHTML = '2 de 5';
+        strengthBadge.className = 'badge badge-pill badge-warning';
+        break;
+      case 3:
+        strengthBadge.innerHTML = '3 de 5';
+        strengthBadge.className = 'badge badge-pill badge-warning';
+        break;
+      default:
+        strengthBadge.innerHTML = '5 de 5';
+        strengthBadge.className = 'badge badge-pill badge-success';
+    }
+  }
+  </script>
+  <script>
+    function loadFile(event) {
+      var output = document.getElementById('avatar-image');
+      output.src = URL.createObjectURL(event.target.files[0]);
+      output.onload = function() {
+        URL.revokeObjectURL(output.src) // Liberar memoria
+      }
+    }
+    </script>
+      <script>
+        function saveUserImage(event) {
+          var file = event.target.files[0];
+          var reader = new FileReader();
+          reader.onload = function(e) {
+            var avatarImage = document.getElementById('avatar-image');
+            avatarImage.src = e.target.result;
+      
+            localStorage.setItem('userAvatar', e.target.result);
+          };
+          reader.readAsDataURL(file);
+        }
+        document.getElementById('dark-mode-toggle').addEventListener('click', function() {
+  document.body.classList.toggle('dark-mode');
+  var elements = document.querySelectorAll('.container, .registration-form, .details-form, nav, button, .cancel, .submit, .back-button, .forward-button');
+  elements.forEach(function(element) {
+    element.classList.toggle('dark-mode');
+  });
+});
+document.getElementById('dark-mode-toggle').addEventListener('click', function() {
+  document.body.classList.toggle('dark-mode');
+});
+
+
+</script>
+  
+</html>

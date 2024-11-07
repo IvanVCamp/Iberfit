@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Principal - Iberfit</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+  <header class="page-header">
+    <img src="logo.png" alt="Verfit Logo" class="logo">
+    <button id="dark-mode-toggle" class="dark-mode-button">Modo Oscuro</button>
+  </header>
+  
+  <nav>
+    <a href="main.html">INICIO</a> > <a href="new-page.html">NUEVA PÁGINA</a>
+  </nav>
+  
+  <main>
+    <div class="button-grid">
+      <button class="square-button" onclick="window.location.href='page1.html'">
+        <img src="mancuerna.png" alt="Descripción 1" class="button-image">
+        Ejercicios
+      </button>
+      <button class="square-button" onclick="window.location.href='page2.html'">
+        <img src="stats.png" alt="Descripción 2" class="button-image">
+        Estadísticas
+      </button>
+      <button class="square-button" onclick="window.location.href='recetas.html'">
+        <img src="recetas.png" alt="Descripción 3" class="button-image">
+        Recetas
+      </button>
+      <button class="square-button" onclick="window.location.href='page4.html'">
+        <img src="medalla.png" alt="Descripción 4" class="button-image">
+        Recompensas
+      </button>
+    </div>
+    <div id="salida">
+      <button id="exit-button" class="exit-button">Salir</button>
+    </div>
+  </main>
+  
+  <script>
+    document.getElementById('exit-button').addEventListener('click', function() {
+      window.close();
+    });
+    document.getElementById('dark-mode-toggle').addEventListener('click', function() {
+      var body = document.body;
+      var containers = document.querySelectorAll('.container, .tab');
+      body.classList.toggle('dark-mode');
+      containers.forEach(function(container) {
+        container.classList.toggle('dark-mode');
+      });
+    });
+
+    var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+    recognition.lang = 'es-ES';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onresult = function(event) {
+      var speechResult = event.results[0][0].transcript.toLowerCase();
+
+      if(speechResult === 've a recetas') {
+        window.location.href='recetas.html';
+      }
+
+      if(speechResult === 'modo oscuro' || speechResult==='modo claro') {
+        var body = document.body;
+        var containers = document.querySelectorAll('.container, .tab');
+        body.classList.toggle('dark-mode');
+        containers.forEach(function(container) {
+          container.classList.toggle('dark-mode');
+        });
+      }
+    };
+
+    recognition.start();
+  </script>
+</div>
+</body>
+</html>

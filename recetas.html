@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recetas - Verfit</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+  <header class="page-header">
+    <img src="logo.png" alt="Iberfit Logo" class="logo">
+    <img src="audio.png" id="enableAudioButton">
+  </header>
+  <nav>
+    <a href="index.html">INICIO</a> > <a href="recetas.html">RECETAS</a>
+  </nav>
+  <button id="dark-mode-toggle" class="dark-mode-button">Modo Oscuro</button>
+  
+  <main>
+    <div class="dish-grid">
+      <div class="dish-card">
+        <img src="lechazo.jpg" alt="Lechazo" class="dish-image">
+        <h2>Lechazo de cordero.</h2>
+        <p>Trátese este de un plato selecto de la gastronomía abulense degustado desde la baja Edad Media.</p>
+        <p><img src="clock.png" alt="Tiempo de preparación" class="small-icon"> 30 minutos</p>
+        <p><img src="españa.png" alt="Bandera de ESPAÑA" class="small-flag"></p>
+        <h3>Gastronomía de interior.</h3>
+      </div>
+      <div class="dish-card" id="sopacontainer">
+        <img src="sopa.jpg" alt="Sopa castellana" class="dish-image">
+        <h2>Sopa castellana.</h2>
+        <p class="sopacastellana" id="sopa-castellana-desc">Plato para los días del invierno más letal en el interior de la estepa peninsular española.</p>
+        <p><img src="clock.png" alt="Tiempo de preparación" class="small-icon"> 42 minutos</p>
+        <p><img src="españa.png" alt="Bandera de ESPAÑA" class="small-flag"></p>
+        <h3>Gastronomía de interior.</h3>
+      </div>    
+      <div class="dish-card">
+        <img src="chateubriand.jpg" alt="chateubriand" class="dish-image">
+        <h2>Chateaubriand.</h2>
+        <p>Un plato muy oh-la-la! para quienes añoran las épocas prósperas de Francia, remontándose a períodos previos a los revolucionarios.</p>
+        <p><img src="clock.png" alt="Tiempo de preparación" class="small-icon"> 45 minutos</p>
+        <p><img src="francia.png" alt="Bandera de Francia" class="small-flag"></p>
+        <h3>Gastronomía aristocrática.</h3>
+      </div>
+      <div class="dish-card">
+        <img src="arroz.jpg" alt="arroz" class="dish-image">
+        <h2>Risotto affumicato.</h2>
+        <p>Un plato que condensa la tradición selecta alpina en su austeridad con la sugerencia del Mezzogiorno uniendo la península de punta a punta.</p>
+        <p><img src="clock.png" alt="Tiempo de preparación" class="small-icon"> 19 minutos</p>
+        <p><img src="italia.jpg" alt="Bandera de Italia" class="small-flag"></p>
+        <h3>Gastronomía costero-mediterránea.</h3>
+      </div>
+    </div>
+    <div id="salida">
+      <button type="button" class="back-button">←</button>
+      <button id="exit-button" class="exit-button">Salir</button>
+    </div>
+  </main>
+  <audio id="audioPlayer" src="voz.mp4"></audio>
+  <audio id="audioPlayer2" src="Pedrito.mp4"></audio>
+  <script>
+    document.getElementById('exit-button').addEventListener('click', function() {
+      window.close();
+    });
+    
+    document.getElementById('dark-mode-toggle').addEventListener('click', function() {
+      var body = document.body;
+      var containers = document.querySelectorAll('.container, .tab');
+      body.classList.toggle('dark-mode');
+      containers.forEach(function(container) {
+        container.classList.toggle('dark-mode');
+      });
+    });
+
+    let isAudioEnabled = false;
+
+    document.getElementById('enableAudioButton').addEventListener('click', function() {
+      isAudioEnabled = true;
+      this.style.display = 'none';
+    });
+
+    const speechRecognition = new webkitSpeechRecognition();
+    speechRecognition.continuous = true;
+    speechRecognition.lang = 'es-ES';
+    speechRecognition.onresult = (event) => {
+      const last = event.results.length - 1;
+      const command = event.results[last][0].transcript.trim();
+
+      switch (command.toLowerCase()) {
+        case 'modo oscuro':
+          document.body.classList.add('dark-mode');
+          document.querySelectorAll('.container, .tab').forEach(container => {
+            container.classList.add('dark-mode');
+          });
+          break;
+        case 'modo claro':
+          document.body.classList.remove('dark-mode');
+          document.querySelectorAll('.container, .tab').forEach(container => {
+            container.classList.remove('dark-mode');
+          });
+          break;
+        case 'sopa castellana':
+          leerTexto(document.querySelector('.sopacastellana').innerText);
+          break;
+        case 'ver receta':
+          window.location.href = 'sopacastellana.html';
+          break;
+        case 'inicio':
+          window.location.href = 'main.html';
+          break;
+        case 'para':
+          speechSynthesis.pause();
+          break;
+        case 'sigue':
+          speechSynthesis.resume();
+          break;
+        case 'al principio':
+          speechSynthesis.cancel();
+          leerTexto(document.querySelector('.sopacastellana').innerText);
+          break;
+        case 'vladimir':
+          var audioPlayer = document.getElementById('audioPlayer2');
+          if (audioPlayer) {
+            audioPlayer.play();
+          }
+          break;
+      }
+    };
+    function leerTexto(texto) {
+    const utterance = new SpeechSynthesisUtterance(texto);
+    speechSynthesis.speak(utterance);
+    }
+    speechRecognition.start();
+    document.addEventListener('DOMContentLoaded', function() {
+
+  document.getElementById('dark-mode-toggle').addEventListener('click', function() {
+    document.body.classList.toggle('dark-mode');
+    });
+  document.getElementById('enableAudioButton').addEventListener('click', function() {
+      this.disabled = true;
+    });
+  document.getElementById("sopacontainer").addEventListener('click', function() {
+      window.location.href = 'sopacastellana.html';
+    });
+  document.querySelector('.back-button').addEventListener('click', function() {
+    window.location.href = 'main.html';
+    });
+  });
+  </script>
+</div>
+</body>
+</html>

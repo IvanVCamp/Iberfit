@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalles - Verfit</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+
+  <header class="page-header">
+    <img src="logo.png" alt="Verfit Logo" class="logo">
+  </header>
+  
+  <nav>
+    <a href="registro.html">INICIO</a> > <a href="#">DETALLES</a>
+  </nav>
+  <button id="dark-mode-toggle" class="dark-mode-button">Modo Oscuro</button>
+  <main class="detalles">
+    <section class="details-form">
+      <div class="avatar-section">
+        <img src="" alt="Avatar" class="avatar" id="user-avatar">
+      </div>
+
+      <div class="question">
+        <p>¿Con qué frecuencia practicas deporte?</p>
+        <div class="radio-group">
+          <input type="radio" id="never" name="frequency" value="never">
+          <label for="never">Nunca</label>
+
+          <input type="radio" id="sometimes" name="frequency" value="sometimes">
+          <label for="sometimes">A veces</label>
+
+          <input type="radio" id="always" name="frequency" value="always">
+          <label for="always">Siempre</label>
+        </div>
+      </div>
+
+      <div class="question">
+        <p>¿Cuál de los siguientes deportes practicas?</p>
+        <div class="checkbox-group">
+          <input type="checkbox" id="soccer" name="sports" value="soccer">
+          <label for="soccer">Fútbol</label><br>
+          
+          <input type="checkbox" id="basketball" name="sports" value="basketball">
+          <label for="basketball">Baloncesto</label><br>
+          
+          <input type="checkbox" id="baseball" name="sports" value="baseball">
+          <label for="baseball">Béisbol</label><br>
+          
+          <input type="checkbox" id="volleyball" name="sports" value="volleyball">
+          <label for="volleyball">Voley</label><br>
+          
+          <input type="checkbox" id="handball" name="sports" value="handball">
+          <label for="handball">Balonmano</label>
+        </div>
+      </div>
+      
+      <div class="navigation-buttons">
+        <button type="button" class="back-button">←</button>
+        <button type="button" class="forward-button">→</button>
+      </div>
+      
+    </section>
+  </main>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  window.onload = function() {
+    var avatar = localStorage.getItem('userAvatar');
+    if (avatar) {
+        document.getElementById('user-avatar').src = avatar;
+    }
+    document.getElementById('exit-button').addEventListener('click', function() {
+      window.close();
+    });
+    document.querySelector('.back-button').addEventListener('click', function() {
+      window.location.href = 'registro.html';
+    });
+    document.querySelector('.forward-button').addEventListener('click', function() {
+      window.location.href = 'medidas.html';
+    });
+
+    document.getElementById('dark-mode-toggle').addEventListener('click', function() {
+      document.body.classList.toggle('dark-mode');
+      var elements = document.querySelectorAll('.container, .registration-form, .details-form, nav, button, .cancel, .submit, .back-button, .forward-button');
+      elements.forEach(function(element) {
+        element.classList.toggle('dark-mode');
+      });
+    });
+  };
+</script>
+</body>
+</html>

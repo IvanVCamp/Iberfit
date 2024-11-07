@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medidas - Verfit</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+  <header>
+    <img src="logo.png" alt="Verfit Logo" class="logo">
+    <button id="dark-mode-toggle" class="dark-mode-button">Modo Oscuro</button>
+  </header>
+  <nav>
+    <a href="#">INICIO</a> > <a href="#">MEDIDAS</a>
+  </nav>
+  <main class="medidas">
+    <div class="details-form">
+    <div class="body-measurement">
+      <div class="avatar-section">
+        <img src="human-icon.png" alt="Figura humana" id="human-figure" class="human-figure">
+      </div>
+              <div class="slider-container">
+          <label for="weight-slider">¿Cuánto pesas?</label>
+          <input type="range" id="weight-slider" name="weight" min="0" max="200">
+          <input type="text" id="weight-text" readonly>
+          
+          <label for="height-slider">¿Cuánto mides?</label>
+          <input type="range" id="height-slider" name="height" min="0" max="250">
+          <input type="text" id="height-text" readonly>
+        </div>
+      </div>
+    </div>
+    <div class="navigation-buttons">
+      <button class="back-button" onclick="location.href='detalles.html';">←</button>
+      <button class="forward-button" onclick="location.href='diet-config.html';">→</button>
+    </div>
+  </main>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  document.getElementById('user-avatar').src = localStorage.getItem('userAvatar');
+
+  document.getElementById('weight-slider').addEventListener('input', function() {
+    document.getElementById('weight-text').value = this.value + ' kg';
+  
+    document.getElementById('human-figure').style.transform = 'scale(' + (this.value / 100) + ')';
+  });
+
+  document.getElementById('height-slider').addEventListener('input', function() {
+    document.getElementById('height-text').value = this.value + ' cm';
+
+    document.getElementById('human-figure').style.transform = 'scale(' + (this.value / 200) + ')';
+  });
+</script>
+<script>
+  document.getElementById('weight-slider').addEventListener('input', function() {
+  document.getElementById('weight-text').value = this.value + ' kg';
+  var scale = this.value / 100;
+  var heightScale = document.getElementById('height-slider').value / 200;
+  // Ajustar el ancho de la figura humana
+  document.getElementById('human-figure').style.transform = 'scaleX(' + scale + ')';
+});
+
+document.getElementById('height-slider').addEventListener('input', function() {
+  document.getElementById('height-text').value = this.value + ' cm';
+  var scale = this.value / 200;
+  var weightScale = document.getElementById('weight-slider').value / 100;
+  // Ajustar la altura de la figura humana
+  document.getElementById('human-figure').style.transform = 'scaleY(' + scale + ')';
+});
+document.getElementById('dark-mode-toggle').onclick = function() {
+  document.body.classList.toggle('dark-mode');
+};
+document.getElementById('dark-mode-toggle').addEventListener('click', function() {
+  document.body.classList.toggle('dark-mode');
+  var elements = document.querySelectorAll('.container, .registration-form, .details-form, nav, button, .cancel, .submit, .back-button, .forward-button');
+  elements.forEach(function(element) {
+    element.classList.toggle('dark-mode');
+  });
+});
+</script>
+</body>
+</html>
